@@ -80,6 +80,9 @@ class Graph:
                     v = int(edges[i][j])
                     adj[i].append((j, v))
         
+        min_edge = [float('inf')] * V  # min_edge[v] will hold the weight of the smallest edge connecting v to the MST
+        min_edge[0] = 0.0  # The cost of adding node 0 is 0 initially
+
         pq = []
         visited = [False] * V
         res = 0 # Sum of the edge weights
@@ -88,21 +91,29 @@ class Graph:
 
         parent[0] = -1
 
-        # Perform Prim's algorithm to find the Minimum Spanning Tree
+        # Perform lazy Prim's MST
         while pq:
             wt, u = heapq.heappop(pq)
             if visited[u]:
                 continue
             res += wt
             visited[u] = True
-            for v, w in adj[u]:
-                if not visited[v]:
-                    heapq.heappush(pq, (w, v)) # Add the adjacent edge to the priority queue
-                    parent[v] = u # Store the parent of the vertex
-
+            
+            # Explore neighbors of u
+            for v in range(V):
+                w = edges[u][v]
+                # If there is an edge u->v (w != 0) and v is not visited, check for a smaller edge
+                if w != 0 and not visited[v] and w < min_edge[v]:
+                    min_edge[v] = w
+                    parent[v] = u
+                    heapq.heappush(pq, (w, v))
+        
+        # Build MST adjacency matrix
         mst = np.zeros((V, V))
         for i in range(1, V):
-            mst[i][parent[i]] = edges[i][parent[i]]
-            mst[parent[i]][i] = edges[parent[i]][i]
+            p = parent[i]
+            # Store the weight both ways since it's an undirected graph
+            mst[i][p] = edges[i][p]
+            mst[p][i] = edges[p][i]
         
         self.mst = mst
