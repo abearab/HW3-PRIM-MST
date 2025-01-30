@@ -1,5 +1,7 @@
 # HW 3: Prim's algorithm
 
+[![HW3-test](https://github.com/abearab/HW3-PRIM-MST/actions/workflows/main.yml/badge.svg)](https://github.com/abearab/HW3-PRIM-MST/actions/workflows/main.yml)
+
 In this assignment, I implemented Prim's algorithm, a non-trivial greedy algorithm used to construct minimum spanning trees. I've used our class pseudo-code as a guide, and have also referenced the following link (see [here](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/)). Note: I only used `networkx` to test my implementation.
 
 <details><summary>Click to expand</summary>
