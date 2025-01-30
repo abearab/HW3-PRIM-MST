@@ -1,6 +1,8 @@
 # HW 3: Prim's algorithm
 
-In this assignment, you'll implement Prim's algorithm, a non-trivial greedy algorithm used to construct minimum spanning trees. 
+In this assignment, I implemented Prim's algorithm, a non-trivial greedy algorithm used to construct minimum spanning trees. I've used our class pseudo-code as a guide, and have also referenced the following link (see [here](https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/)). Note: I only used `networkx` to test my implementation.
+
+<details><summary>Click to expand</summary>
 
 ## Tasks
 
@@ -52,3 +54,5 @@ Push your code to GitHub with passing unit tests, and submit a link to your repo
 ### Extra credit (0.5)
 
 * Github actions/workflow (0.5)
+
+</details>
