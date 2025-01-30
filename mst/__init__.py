@@ -5,5 +5,3 @@ Student: Abe Arab
 """
 
 from .graph import Graph
-
-__version__ = '0.2.5'
