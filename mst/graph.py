@@ -27,8 +27,7 @@ class Graph:
 
     def construct_mst(self):
         """
-    
-        TODO: Given `self.adj_mat`, the adjacency matrix of a connected undirected graph, implement Prim's 
+        Given `self.adj_mat`, the adjacency matrix of a connected undirected graph, implement Prim's 
         algorithm to construct an adjacency matrix encoding the minimum spanning tree of `self.adj_mat`. 
             
         `self.adj_mat` is a 2D numpy array of floats. Note that because we assume our input graph is
@@ -40,5 +39,61 @@ class Graph:
         use of priority queues in your implementation. Refer to the heapq module, particularly the 
         `heapify`, `heappop`, and `heappush` functions.
 
+        For more information on Prim's algorithm, see the following link: 
+        https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
+
         """
-        self.mst = None
+        ## pseudocode from class slide
+        # PRIM(V, E, c)
+        # _______________________________________________________________
+        # S ← ∅, T ← ∅.
+        # s ← any node in V.
+        # FOREACH v ≠ s : π [v] ← ∞ , pred[v] ← null; π [s] ← 0.
+        # Create an empty priority queue pq.
+        # FOREACH v ∈ V : INSERT(pq, v, π[v]).
+        # WHILE (IS-NOT-EMPTY(pq))
+        #   u ← DEL-MIN(pq).
+        #   S ← S ∪ { u }, T ← T ∪ { pred[u] }.
+        #   FOREACH edge e = (u, v) ∈ E with v ∉ S :
+        #       IF (ce < π [v])
+        #           DECREASE-KEY(pq, v, ce).
+        #           π [v] ← ce; pred[v] ← e.
+        
+        ## Extran note from class
+        # ・[note] π[v] = cost of cheapest known edge between v and S
+
+        ## Step by step explanation
+        # - We transform the adjacency matrix into adjacency list using list of list in Python
+        # - Then we create a Pair class to store the vertex and its weight .
+        # - We sort the list on the basis of lowest weight.
+        # - We create priority queue and push the first vertex and its weight in the queue
+        # - Then we just traverse through its edges and store the least weight in a variable called ans.
+        # - At last after all the vertex we return the ans.
+
+        ## Code implementation
+        V, E = self.adj_mat.shape
+        edges = self.adj_mat
+        adj = [[] for _ in range(V)]
+        for i in range(E):
+            for j in range(V):        
+                if edges[i][j] != 0:
+                    v = int(edges[i][j])
+                    adj[i].append((j, v))
+        
+        pq = []
+        visited = [False] * V
+        res = 0 # Sum of the edge weights
+        heapq.heappush(pq, (0, 0))
+
+        # Perform Prim's algorithm to find the Minimum Spanning Tree
+        while pq:
+            wt, u = heapq.heappop(pq)
+            if visited[u]:
+                continue
+            res += wt
+            visited[u] = True
+            for v, w in adj[u]:
+                if not visited[v]:
+                    heapq.heappush(pq, (w, v))
+        
+        self.mst = res
