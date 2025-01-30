@@ -76,4 +76,4 @@ def test_mst_with_networkx():
     G = nx.from_numpy_array(g.adj_mat)
     mst_nx = nx.minimum_spanning_tree(G)
     mst_nx_adj = nx.adjacency_matrix(mst_nx).toarray()
-    assert g.mst == mst_nx_adj
+    assert np.array(g.mst == mst_nx_adj).all()
