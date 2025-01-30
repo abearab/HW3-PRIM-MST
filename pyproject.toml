@@ -13,6 +13,11 @@ packages = [
 
 [tool.poetry.dependencies]
 python = ">=3.11"
+pytest
+pandas
+numpy
+pytest
+scikit-learn
 
 [tool.poetry.group.test.dependencies]
 pytest = "*"
