@@ -2,6 +2,7 @@ import pytest
 import numpy as np
 from mst import Graph
 from sklearn.metrics import pairwise_distances
+import networkx as nx
 
 
 def check_mst(adj_mat: np.ndarray, 
@@ -65,10 +66,12 @@ def test_mst_single_cell_data():
     check_mst(g.adj_mat, g.mst, 57.263561605571695)
 
 
-def test_mst_student():
+def test_mst_with_networkx():
     """
-    
-    TODO: Write at least one unit test for MST construction.
-    
+    Unit test for the local construction of a minimum spanning tree using networkx.
     """
-    pass
+    file_path = './data/small.csv'
+    g = Graph(file_path)
+    g.construct_mst()
+    G = nx.from_numpy_matrix(g.adj_mat)
+    assert g.mst == nx.minimum_spanning_tree(G)
