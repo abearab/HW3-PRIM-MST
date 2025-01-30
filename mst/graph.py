@@ -83,7 +83,10 @@ class Graph:
         pq = []
         visited = [False] * V
         res = 0 # Sum of the edge weights
+        parent = [None] * V  # Array to store constructed MST
         heapq.heappush(pq, (0, 0))
+
+        parent[0] = -1
 
         # Perform Prim's algorithm to find the Minimum Spanning Tree
         while pq:
@@ -94,6 +97,12 @@ class Graph:
             visited[u] = True
             for v, w in adj[u]:
                 if not visited[v]:
-                    heapq.heappush(pq, (w, v))
+                    heapq.heappush(pq, (w, v)) # Add the adjacent edge to the priority queue
+                    parent[v] = u # Store the parent of the vertex
+
+        mst = np.zeros((V, V))
+        for i in range(1, V):
+            mst[i][parent[i]] = edges[i][parent[i]]
+            mst[parent[i]][i] = edges[parent[i]][i]
         
-        self.mst = res
+        self.mst = mst

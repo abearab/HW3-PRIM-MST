@@ -73,5 +73,7 @@ def test_mst_with_networkx():
     file_path = './data/small.csv'
     g = Graph(file_path)
     g.construct_mst()
-    G = nx.from_numpy_matrix(g.adj_mat)
-    assert g.mst == nx.minimum_spanning_tree(G)
+    G = nx.from_numpy_array(g.adj_mat)
+    mst_nx = nx.minimum_spanning_tree(G)
+    mst_nx_adj = nx.adjacency_matrix(mst_nx).toarray()
+    assert g.mst == mst_nx_adj
